@@ -11,11 +11,11 @@ def get_next_chunk():
   tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
   sentences = tokenizer.tokenize(text_string)
   # tweet the whole sentence if it's short enough
-  if len(sentences[0]) <= 140:
+  if len(sentences[0]) <= 132:
     chunk = sentences[0]
-  # otherwise just print the first 140 characters
+  # otherwise just print the first 132 characters
   else:
-    chunk = sentences[0][0:140]
+    chunk = sentences[0][0:132]
 
   # delete what we just tweeted from the text file
   text_file.seek(0)
@@ -25,6 +25,8 @@ def get_next_chunk():
   return chunk
 
 def tweet(message):
+  if "Heathcliff" in message:
+    message=message.replace("Heathcliff", "Heathcliff the cat")
   auth = tweepy.OAuthHandler(secrets.consumer_key, secrets.consumer_secret)
   auth.set_access_token(secrets.access_token, secrets.access_token_secret)
   api = tweepy.API(auth)
